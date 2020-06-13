@@ -30,7 +30,7 @@ class MusicLibraryController
     end 
 
     def list_artists
-        Song.all.sort{|a, b | a.artist.name <=> b.artist.name}.each_with_index do |song, index|
+        Artist.all.sort{|a, b | a.artist.name <=> b.artist.name}.each_with_index do |song, index|
          puts "#{index+1}. #{song.artist.name}"
         end 
      end 
@@ -40,4 +40,14 @@ class MusicLibraryController
             puts "#{index+1}. #{song.genre.name}"
            end 
      end 
+
+     def list_songs_by_artist 
+        puts "Please enter the name of the artist:"
+        input = gets.chomp 
+        if Artist.find_by_name(input)
+            artist.songs.sort{|a, b| a.name <=> b.name}.each_with_index do |song, index| 
+                puts "#{index+1} #{song.artist.name} - #{song.name}"
+            end 
+        end 
+    end 
 end 
