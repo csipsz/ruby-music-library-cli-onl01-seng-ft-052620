@@ -29,7 +29,7 @@ class Artist
     end 
 
     def songs
-        Song.all
+        @songs 
     end 
 
     def add_song(song)
@@ -40,8 +40,10 @@ class Artist
     end 
 
     def genres 
-        songs.collect do |song| song.artist == self
+        Song.all.collect do |song| 
+        if song.artist == self 
             song.genre
+        end 
         end 
         .uniq
     end 
