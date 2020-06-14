@@ -28,14 +28,12 @@ class Genre
     end
 
     def songs 
-        Song.all
+        @songs
     end 
 
-    def artists 
-        Song.all.collect do |song| song.genre == self 
-            song.artist 
-        end 
-        .uniq
-    end 
+    def artists
+        songs.collect{ |s| s.artist }.uniq
+      end
+    
 
 end 

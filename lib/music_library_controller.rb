@@ -60,25 +60,25 @@ class MusicLibraryController
            end 
      end 
 
-     def list_songs_by_artist 
-        puts "Please enter the name of an artist:"
-        input = gets.chomp 
-        artist_instance = Artist.find_by_name(input)
-        if artist_instance
-            artist_instance.songs.sort{|a, b| a.name <=> b.name}.each_with_index do |song, index| 
-              
-              puts "#{index+1}. #{song.name} - #{song.name}"
-                
-            end 
-        end 
-    end 
+     def list_songs_by_artist
+      puts "Please enter the name of an artist:"
+      input = gets.strip
+  
+      if artist = Artist.find_by_name(input)
+        artist.songs.sort{ |a, b| a.name <=> b.name }.each.with_index(1) do |s, i|
+          puts "#{i}. #{s.name} - #{s.genre.name}"
+        end
+      end
+    end
+  
 
     def list_songs_by_genre
         puts "Please enter the name of a genre:"
         input = gets.chomp
     
-        if Genre.find_by_name(input)
-          Genre.all.sort{|a, b| a.name <=> b.name}.each_with_index do |song, index|
+        genre_instance = Genre.find_by_name(input)
+        if genre_instance
+          genre_instance.songs.sort{|a, b| a.name <=> b.name}.each_with_index do |song, index|
             puts "#{index+1}. #{song.artist.name} - #{song.name}"
           end
         end
@@ -88,8 +88,9 @@ class MusicLibraryController
         puts "Which song number would you like to play?"
         input = gets.chomp.to_i
         if 0 < input && input <= Song.all.length 
+          #binding.pry
             Song.all.sort{|a, b | a.name <=> b.name}.each_with_index do |song, index| 
-            if index == input
+            if index == (input - 1)
             puts "Playing #{song.name} by #{song.artist.name}"
             end 
         end
